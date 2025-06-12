@@ -12,7 +12,7 @@ class CreateAdmin extends Command
      *
      * @var string
      */
-    protected $signature = 'app:create-admin {name} {email} {password}';
+    protected $signature = 'app:create-admin {name} {password} {email?}';
 
     /**
      * The console command description.
