@@ -12,7 +12,7 @@ class CreateAdmin extends Command
      *
      * @var string
      */
-    protected $signature = 'app:create-admin {name} {password} {email?}';
+    protected $signature = 'app:create-admin {login} {password} {name} {email?}';
 
     /**
      * The console command description.
@@ -27,9 +27,10 @@ class CreateAdmin extends Command
     public function handle()
     {
         User::create([
+            'login' => $this->argument('login'),
+            'password' => $this->argument('password'),
             'name' => $this->argument('name'),
             'email' => $this->argument('email'),
-            'password' => $this->argument('password')
         ]);
     }
 }

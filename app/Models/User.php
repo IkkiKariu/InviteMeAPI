@@ -23,9 +23,10 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'name',
-        'email',
+        'login',
         'password',
+        'name',
+        'email'
     ];
 
     /**
@@ -34,6 +35,7 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $hidden = [
+        'login',
         'password',
         'remember_token',
     ];
