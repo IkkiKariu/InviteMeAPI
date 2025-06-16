@@ -18,6 +18,7 @@ return new class extends Migration
             $table->decimal('price');
             $table->enum('type', ['basic', 'additional'])->default('basic');
             $table->string('work_time')->nullable();
+            $table->boolean('archived')->default(false);
         });
     }
 
