@@ -3,11 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-use App\Enums\ServiceType;
-
-class StoreServiceRequest extends FormRequest
+class StoreServicePhotoRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,12 +22,7 @@ class StoreServiceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'string'],
-            'description' => ['nullable', 'string'],
-            'price' => ['required', 'decimal:2'],
-            'type' => ['required', Rule::enum(ServiceType::class)], 
-            'work_time' => ['nullable', "string"],
-            'archived' => ['boolean']
+            'photo' => ['required', 'image', 'mimes:jpeg,png,jpg,webp']
         ];
     }
 }

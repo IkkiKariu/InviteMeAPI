@@ -3,6 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+
+use App\Enums\ServiceType;
 
 class UpdateServiceRequest extends FormRequest
 {
@@ -11,7 +14,7 @@ class UpdateServiceRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +25,12 @@ class UpdateServiceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => ['string'],
+            'description' => ['nullable', 'string'],
+            'price' => ['decimal:2'],
+            'type' => [Rule::enum(ServiceType::class)],
+            'work_time' => ['nullable', 'string'],
+            'archived' => ['boolean']
         ];
     }
 }

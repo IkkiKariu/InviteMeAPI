@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Validator;
 
 use App\Services\ServiceService;
 use App\Http\Requests\StoreServiceRequest;
+use App\Http\Requests\UpdateServiceRequest;
+use App\Http\Resources\ServiceResource;
+use App\Http\Resources\ExtServiceResource;
 
 class ServiceController extends Controller
 {
@@ -19,22 +22,30 @@ class ServiceController extends Controller
 
     public function store(StoreServiceRequest $request)
     {
-        $this->serviceService->create($request->validated());
+        $resource = new ExtServiceResource($this->serviceService->create($request->validated()));
+
+        return $resource->response()->setStatusCode(201);
     }
 
     public function show(string $id)
     {
-        $validator = Validator::make(['id' => $id], [
-            'id' => ['required', 'uuid', 'exists:services,id']
-        ]);
-
-        if ($validator->fails()) return response()->json(status: 404);
-
-        return response()->json(data: $this->serviceService->get($id), status: 200);
+        return new ExtServiceResource($this->serviceService->get($id));
     }
 
     public function index()
     {
-        return response()->json(data: $this->serviceService->all(), status: 200);
+        return ServiceResource::collection($this->serviceService->all());
+    }
+
+    public function update(UpdateServiceRequest $request, string $id)
+    {
+        return new ExtServiceResource($this->serviceService->update($id, $request->validated()));
+    }
+
+    public function delete(string $id)
+    {
+        $this->serviceService->delete($id);
+        
+        return response()->json(data: ['data' => []], status: 200);
     }
 }
