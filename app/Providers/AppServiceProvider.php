@@ -8,6 +8,7 @@ use Laravel\Sanctum\Sanctum;
 use App\Services\TokenAuthService;
 use App\Services\ServiceService;
 use App\Services\ServicePhotoService;
+use App\Services\VisitingTimeService;
 use App\Models\PersonalAccessToken;
 
 class AppServiceProvider extends ServiceProvider
@@ -25,6 +26,9 @@ class AppServiceProvider extends ServiceProvider
         });
         $this->app->bind(ServicePhotoService::class, function () {
             return new ServicePhotoService;
+        });
+        $this->app->bind(VisitingTimeService::class, function () {
+            return new VisitingTimeService;
         });
     }
 
