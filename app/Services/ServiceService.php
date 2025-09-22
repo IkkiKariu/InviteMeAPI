@@ -19,9 +19,11 @@ class ServiceService
         return Service::find($id);
     }
 
-    public function all(): Collection
+    public function all(?bool $archived=null): Collection
     {
-        return Service::select('id', 'title', 'price', 'type', 'work_time', 'archived')->get();
+        $query = Service::select('id', 'title', 'price', 'type', 'work_time', 'archived');
+
+        return is_null($archived) ? $query->get() : $query->where('archived', '=', $archived)->get();
     }
 
     public function update(string $id, array $updServiceData): Service

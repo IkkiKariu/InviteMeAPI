@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Http\Request;
 use App\Services\ServiceService;
 use App\Http\Requests\StoreServiceRequest;
 use App\Http\Requests\UpdateServiceRequest;
@@ -13,7 +12,7 @@ use App\Http\Resources\ExtServiceResource;
 
 class ServiceController extends Controller
 {
-    private ServiceService $serviceService;
+    protected ServiceService $serviceService;
 
     public function __construct(ServiceService $serviceService)
     {
@@ -32,9 +31,9 @@ class ServiceController extends Controller
         return new ExtServiceResource($this->serviceService->get($id));
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        return ServiceResource::collection($this->serviceService->all());
+        return ServiceResource::collection($this->serviceService->all(archived: false));
     }
 
     public function update(UpdateServiceRequest $request, string $id)
